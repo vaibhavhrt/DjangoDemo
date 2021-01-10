@@ -17,8 +17,8 @@ class ChildA2Serializer(serializers.ModelSerializer):
 
 
 class ChildASerializer(serializers.ModelSerializer):
-    childA1s = ChildA1Serializer(many=True, read_only=True)
-    childA2s = ChildA1Serializer(many=True, read_only=True)
+    childA1s = ChildA1Serializer(many=True, required=False)
+    childA2s = ChildA1Serializer(many=True, required=False)
 
     class Meta:
         model = ChildA
@@ -49,7 +49,16 @@ class ParentSerializer(serializers.ModelSerializer):
         parent = Parent.objects.create(**validated_data)
 
         for childA_data in childAs_data:
-            ChildA.objects.create(parent=parent, **childA_data)
+            childA1s_data = childA_data.pop('childA1s', [])
+            childA2s_data = childA_data.pop('childA2s', [])
+
+            childA = ChildA.objects.create(parent=parent, **childA_data)
+
+            for childA1_data in childA1s_data:
+                ChildA1.objects.create(parent=childA, **childA1_data)
+
+            for childA2_data in childA2s_data:
+                ChildA2.objects.create(parent=childA, **childA2_data)
 
         for childB_data in childBs_data:
             ChildB.objects.create(parent=parent, **childB_data)
