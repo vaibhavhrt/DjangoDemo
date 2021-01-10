@@ -18,6 +18,7 @@ class ChildA2Serializer(serializers.ModelSerializer):
 
 class ChildASerializer(serializers.ModelSerializer):
     childA1s = ChildA1Serializer(many=True, required=False)
+    # childA1s = serializers.PrimaryKeyRelatedField()
     childA2s = ChildA1Serializer(many=True, required=False)
 
     class Meta:
@@ -60,7 +61,11 @@ class ParentSerializer(serializers.ModelSerializer):
             for childA2_data in childA2s_data:
                 ChildA2.objects.create(parent=childA, **childA2_data)
 
+        childBInstances = []
         for childB_data in childBs_data:
-            ChildB.objects.create(parent=parent, **childB_data)
+            childBInstances.append(ChildB(parent=parent, **childB_data))
+            # ChildB.objects.create(parent=parent, **childB_data)
+
+        ChildB.objects.bulk_create(childBInstances)
 
         return parent
