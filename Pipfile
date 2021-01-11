@@ -8,6 +8,8 @@ djangorestframework = "*"
 
 [dev-packages]
 rope = "*"
+pylint = "*"
+pylint-django = "*"
 
 [requires]
 python_version = "3.8"
