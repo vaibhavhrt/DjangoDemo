@@ -85,6 +85,33 @@ class ParentSerializer(serializers.ModelSerializer):
 
         return parent
 
+    def create_or_update_childA(self, childA_data, parent):
+        childA_id = childA_data.pop('id', None)
+        if childA_id:
+            try:
+                childA = ChildA.objects.get(pk=childA_id)
+                for attr, val in childA_data.items():
+                    setattr(childA, attr, val)
+                childA.save()
+                return childA
+            except ChildA.DoesNotExist:
+                return ChildA.objects.create(parent=parent, **childA_data)
+        else:
+            return ChildA.objects.create(parent=parent, **childA_data)
+
+    def create_or_update_childB(self, childB_data, parent):
+        childB_id = childB_data.pop('id', None)
+        if childB_id:
+            try:
+                childB = ChildB.objects.get(pk=childB_id)
+                for attr, val in childB_data.items():
+                    setattr(childB, attr, val)
+                childB.save()
+            except ChildB.DoesNotExist:
+                ChildB.objects.create(parent=parent, **childB_data)
+        else:
+            ChildB.objects.create(parent=parent, **childB_data)
+
     @transaction.atomic
     def update(self, instance, validated_data):
         childAs_data = validated_data.pop('childAs', None)
@@ -94,18 +121,8 @@ class ParentSerializer(serializers.ModelSerializer):
             for childA_data in childAs_data:
                 childA1s_data = childA_data.pop('childA1s', [])
                 childA2s_data = childA_data.pop('childA2s', [])
-                childA = None
-                childA_id = childA_data.pop('id', None)
-                if childA_id:
-                    try:
-                        childA = ChildA.objects.get(pk=childA_id)
-                        for attr, val in childA_data.items():
-                            setattr(childA, attr, val)
-                        childA.save()
-                    except ChildA.DoesNotExist:
-                        childA = ChildA.objects.create(parent=instance, **childA_data)
-                else:
-                    childA = ChildA.objects.create(parent=instance, **childA_data)
+
+                childA = self.create_or_update_childA(childA_data, instance)
 
                 for childA1_data in childA1s_data:
                     childA1_id = childA1_data.pop('id', None)
@@ -136,17 +153,7 @@ class ParentSerializer(serializers.ModelSerializer):
 
         if (childBs_data):
             for childB_data in childBs_data:
-                childB_id = childB_data.pop('id', None)
-                if childB_id:
-                    try:
-                        childB = ChildB.objects.get(pk=childB_id)
-                        for attr, val in childB_data.items():
-                            setattr(childB, attr, val)
-                        childB.save()
-                    except ChildB.DoesNotExist:
-                        ChildB.objects.create(parent=instance, **childB_data)
-                else:
-                    ChildB.objects.create(parent=instance, **childB_data)
+                self.create_or_update_childB(childB_data, instance)
 
         # instance.name = validated_data.get('name', instance.name)
         for attr, val in validated_data.items():
