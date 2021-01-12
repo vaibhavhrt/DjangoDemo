@@ -1,0 +1,18 @@
+<div>
+  <h1>ParentDetail</h1>
+  <p>Id: {{ parent_id }}</p>
+  <p>Name: {{ parent.name }}</p>
+  <h4>Child A</h4>
+  <a href="{% url 'ChildACreateView' parent_id %}">Create</a>
+  <div>
+    {% for childA in parent.childAs.all %}
+    <p>{{childA}}</p>
+    {% endfor %}
+  </div>
+  <h4>Child B</h4>
+  <div>
+    {% for childB in parent.childBs.all %}
+    <p>{{childB}}</p>
+    {% endfor %}
+  </div>
+</div>

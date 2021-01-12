@@ -69,9 +69,11 @@ class ParentSerializer(serializers.ModelSerializer):
             childA = ChildA.objects.create(parent=parent, **childA_data)
 
             for childA1_data in childA1s_data:
+                delete_key(childA1_data, 'id')
                 ChildA1.objects.create(parent=childA, **childA1_data)
 
             for childA2_data in childA2s_data:
+                delete_key(childA2_data, 'id')
                 ChildA2.objects.create(parent=childA, **childA2_data)
 
         childBInstances = []
