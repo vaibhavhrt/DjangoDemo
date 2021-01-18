@@ -1,10 +1,26 @@
-<div>
-  <h1>ChildA Create</h1>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>ChildA Create</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" />
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  {{ form.media }}
+</head>
+
+<body>
   <div>
-    <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Create</button>
-    </form>
+    <h1>ChildA Create</h1>
+    <div style="max-width: 500px;">
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create</button>
+      </form>
+    </div>
+  </body>
   </div>
-</div>
+</html>

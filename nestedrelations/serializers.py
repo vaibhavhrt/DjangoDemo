@@ -31,7 +31,7 @@ class ChildASerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ChildA
-        fields = ['id', 'name', 'childA1s', 'childA2s']
+        fields = ['id', 'name', 'dt', 'childA1s', 'childA2s']
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 

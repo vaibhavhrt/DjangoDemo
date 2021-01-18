@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 class Parent(models.Model):
@@ -11,6 +12,7 @@ class Parent(models.Model):
 class ChildA(models.Model):
     name = models.CharField(max_length=127)
     parent = models.ForeignKey(Parent, related_name='childAs', on_delete=models.CASCADE)
+    dt = models.DateField(blank=False, default=timezone.localdate)
 
     def __str__(self):
         return f'{self.__class__.__name__}: {self.name}'

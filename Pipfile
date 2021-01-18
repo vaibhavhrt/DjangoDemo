@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 djangorestframework = "*"
+django-datetime-widget2 = "*"
 
 [dev-packages]
 rope = "*"
