@@ -18,9 +18,15 @@
       <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
+        <!-- <p>
+          {{ form.dt.label_tag }}
+          <input id="{{ form.dt.id_for_label }}" name="{{ form.dt.html_name }}" type="date"
+            value="{{ form.dt.value|date:'Y-m-d' }}" />
+        </p> -->
         <button type="submit">Create</button>
       </form>
     </div>
-  </body>
-  </div>
+</body>
+</div>
+
 </html>
