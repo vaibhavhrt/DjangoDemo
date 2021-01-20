@@ -16,5 +16,5 @@ class ChildACreateForm(ModelForm):
         fields = '__all__'
         widgets = {
             # 'dt': DateInput(attrs={'type': 'date'})
-            'dt': DateWidget(attrs={'id':"id_dt"}, usel10n = True, bootstrap_version=3)
+            'dt': DateWidget(attrs={'id': "id_dt"}, usel10n=True, bootstrap_version=3)
         }

@@ -1,5 +1,5 @@
 from django.db import transaction
-from rest_framework import serializers
+from rest_framework import serializers, exceptions
 
 from .models import Parent, ChildA, ChildB, ChildA1, ChildA2
 
@@ -55,6 +55,7 @@ class ParentSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def create(self, validated_data):
+        # raise exceptions.ValidationError({"msg": "test"})
         childAs_data = validated_data.pop('childAs')
         childBs_data = validated_data.pop('childBs')
 
