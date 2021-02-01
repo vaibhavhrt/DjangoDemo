@@ -20,14 +20,17 @@ from rest_framework import routers, serializers, viewsets
 
 from user.urls import router as user_router
 from nestedrelations.urls import router as nestedrelations_router
+from sortnpage.urls import router as sortnpage_router
 
 router = routers.DefaultRouter()
 router.registry.extend(user_router.registry)
 router.registry.extend(nestedrelations_router.registry)
+router.registry.extend(sortnpage_router.registry)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('nestedrelations/',include('nestedrelations.urls')),
+    path('sortnpage/',include('sortnpage.urls')),
 ]

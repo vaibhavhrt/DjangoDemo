@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'user.apps.UserConfig',
     'nestedrelations.apps.NestedrelationsConfig',
+    'sortnpage.apps.SortnpageConfig',
     'datetimewidget',
 ]
 

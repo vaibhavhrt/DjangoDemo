@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaginationDemos List</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>PaginationDemos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Url</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for obj in page_obj %}
+            <tr>
+                <td>{{ obj.name }}</td>
+                <td>{{ obj.amount }}</td>
+                <td><a href="{% url 'PaginationDemoDetail' pk=obj.id %}">{{ obj.id }}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    <!-- Sort -->
+    <div>
+        <form>
+            <select name="ordering">
+                <option value="name">Name Asc</option>
+                <option value="-name">Name Desc</option>
+                <option value="amount">Amount Asc</option>
+                <option value="-amount">Amount Desc</option>
+            </select>
+            <button class="btn btn-primary" type="submit">Sort</button>
+        </form>
+    </div>
+</body>
+
+</html>
