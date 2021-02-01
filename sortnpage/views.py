@@ -1,9 +1,11 @@
 from django.views.generic import ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import PaginationDemo
 
-class PaginationDemoList(ListView):
+class PaginationDemoList(LoginRequiredMixin, ListView):
     model = PaginationDemo
-    paginate_by = 5
+    login_url = '/api-auth/login/'
+    paginate_by = 10
     # ordering = ['name']
 
     def get_ordering(self):
@@ -15,5 +17,11 @@ class PaginationDemoList(ListView):
         
         return ordering
 
-class PaginationDemoDetail(DetailView):
+class PaginationDemoDetail(LoginRequiredMixin, DetailView):
     model = PaginationDemo
+    login_url = '/api-auth/login/'
+    
+    def get_object(self, queryset=None):
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        obj = PaginationDemo.objects.get(uuId=pk)
+        return obj
