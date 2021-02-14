@@ -4,7 +4,7 @@ from .models import PaginationDemo
 
 class PaginationDemoList(LoginRequiredMixin, ListView):
     model = PaginationDemo
-    login_url = '/api-auth/login/'
+    # login_url = '/api-auth/login/'
     paginate_by = 10
     # ordering = ['name']
 
