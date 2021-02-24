@@ -19,7 +19,7 @@ class PaginationDemoList(LoginRequiredMixin, ListView):
 
 class PaginationDemoDetail(LoginRequiredMixin, DetailView):
     model = PaginationDemo
-    login_url = '/api-auth/login/'
+    # login_url = '/api-auth/login/'
     
     def get_object(self, queryset=None):
         pk = self.kwargs.get(self.pk_url_kwarg)
