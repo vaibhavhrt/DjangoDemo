@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccessLevelPermission List</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>PaginationDemos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Access Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for obj in object_list %}
+            <tr>
+                <td>{{ obj.name }}</td>
+                <td>{{ obj.access_level }}</td>
+                <!-- <td><a href="{% url 'PaginationDemoDetail' pk=obj.id %}">{{ obj.id }}</a></td> -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

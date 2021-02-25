@@ -38,10 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'datetimewidget',
     'user.apps.UserConfig',
     'nestedrelations.apps.NestedrelationsConfig',
     'sortnpage.apps.SortnpageConfig',
-    'datetimewidget',
+    'grouppermissions.apps.GrouppermissionsConfig',
 ]
 
 MIDDLEWARE = [
