@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Country Select Create{% endblock %}
+{% block content %}
+<form method="POST">
+  <div>
+    {% csrf_token %}
+    {{form.as_p}}
+    <!-- Country Select -->
+    <p>
+      <label for="country">Country:</label>
+      <select required id="country">
+        <option value="" selected="">---------</option>
+        {% for country in country_list %}
+        <option value="{{ country }}">{{ country }}</option>
+        {% endfor %}
+      </select>
+    </p>
+    <!-- State Select -->
+    <p>
+      <label for="state">State:</label>
+      <select required id="state" disabled>
+        <option value="" selected="">---------</option>
+      </select>
+    </p>
+    <!-- City Select -->
+    <p>
+      <label for="city">City:</label>
+      <select required id="city" name="location" disabled>
+        <option value="" selected="">---------</option>
+      </select>
+    </p>
+  </div>
+  <button class="btn btn-primary" type="submit">Create</button>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function disableState() {
+    $("#state").prop('disabled', true).val('');
+    var select = $("#state")[0];
+    select.options.length = 0; //remove all options
+    select.add(new Option('---------', '')); // add blank option
+  }
+  function enableState() {
+    $('#state').prop('disabled', false);
+  }
+
+  function disableCity() {
+    $("#city").prop('disabled', true).val('');
+    var select = $("#city")[0];
+    select.options.length = 0; //remove all options
+    select.add(new Option('---------', '')); // add blank option
+  }
+  function enableCity() {
+    $('#city').prop('disabled', false);
+  }
+
+  $('#country').change((e) => {
+    // Disable State & City Select
+    disableState();
+    disableCity();
+    // Fetch State dropdown options
+    fetch(`/countrydropdown/country-select-options?country=${e.target.value}`)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        const states = res.state;
+        var select = $("#state")[0];
+        states.forEach(state => {
+          select.add(new Option(state, state)); // Add options to select element
+        });
+      })
+      .finally(() => {
+        // Enable State Select
+        enableState();
+      });
+  })
+
+  $('#state').change((e) => {
+    // Disable City Select
+    disableCity();
+    // Fetch State dropdown options
+    fetch(`/countrydropdown/country-select-options?state=${e.target.value}`)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        const cities = res.city;
+        var select = $("#city")[0];
+        cities.forEach(city => {
+          select.add(new Option(city.city, city.id)); // Add options to select element
+        });
+      })
+      .finally(() => {
+        // Enable City Select
+        enableCity();
+      });
+  })
+</script>
+{% endblock scripts %}

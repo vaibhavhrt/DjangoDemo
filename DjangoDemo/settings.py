@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'nestedrelations.apps.NestedrelationsConfig',
     'sortnpage.apps.SortnpageConfig',
     'grouppermissions.apps.GrouppermissionsConfig',
+    'countrydropdown.apps.CountrydropdownConfig',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +62,7 @@ ROOT_URLCONF = 'DjangoDemo.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
