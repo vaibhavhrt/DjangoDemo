@@ -1,36 +1,43 @@
 {% extends "base.html" %}
 {% block title %}Country Select Create{% endblock %}
 {% block content %}
-<form method="POST">
-  <div>
-    {% csrf_token %}
-    {{form.as_p}}
-    <!-- Country Select -->
-    <p>
-      <label for="country">Country:</label>
-      <select required id="country">
-        <option value="" selected="">---------</option>
-        {% for country in country_list %}
-        <option value="{{ country }}">{{ country }}</option>
-        {% endfor %}
-      </select>
-    </p>
-    <!-- State Select -->
-    <p>
-      <label for="state">State:</label>
-      <select required id="state" disabled>
-        <option value="" selected="">---------</option>
-      </select>
-    </p>
-    <!-- City Select -->
-    <p>
-      <label for="city">City:</label>
-      <select required id="city" name="location" disabled>
-        <option value="" selected="">---------</option>
-      </select>
-    </p>
+<form method="POST" class="needs-validation" novalidate>
+  {% csrf_token %}
+  {{form.as_p}}
+  <!-- Country Select -->
+  <div class="mb-3">
+    <label for="country" class="form-label">Country:</label>
+    <select class="form-select" required id="country">
+      <option value="" selected="">---------</option>
+      {% for country in country_list %}
+      <option value="{{ country }}">{{ country }}</option>
+      {% endfor %}
+    </select>
   </div>
-  <button class="btn btn-primary" type="submit">Create</button>
+  <!-- State Select -->
+  <div class="mb-3">
+    <label for="state" class="form-label">State:</label>
+    <select class="form-select" required id="state" disabled>
+      <option value="" selected="">---------</option>
+    </select>
+  </div>
+  <!-- City Select -->
+  <div class="mb-3">
+    <label for="city" class="form-label">City:</label>
+    <select class="form-select {% if form.errors.location %}is-invalid{% endif %}" required id="city" name="location"
+      disabled>
+      <option value="" selected="">---------</option>
+    </select>
+    <div class="invalid-feedback">
+      {% for error in form.errors.location %}
+      {{error}}
+      {% endfor %}
+    </div>
+  </div>
+  <!-- Submit -->
+  <div class="d-flex justify-content-center">
+    <button class="btn btn-primary" type="submit">Create</button>
+  </div>
 </form>
 {% endblock %}
 
