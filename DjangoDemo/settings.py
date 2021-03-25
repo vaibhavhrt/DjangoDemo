@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'datetimewidget',
+    'django_filters',
     'user.apps.UserConfig',
     'nestedrelations.apps.NestedrelationsConfig',
     'sortnpage.apps.SortnpageConfig',

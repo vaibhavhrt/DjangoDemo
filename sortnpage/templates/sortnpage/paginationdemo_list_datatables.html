@@ -4,8 +4,22 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.css" />
 {% endblock head %}
 
+{% block header_text %}PaginationDemos{% endblock %}
 {% block content %}
-<h2>PaginationDemos</h2>
+<form class="row my-4">
+    <div class="col-md-5">
+        <label for="id_filter_name" class="form-label">Name</label>
+        <input class="form-control" id="id_filter_name" name="name" value="{{ request.GET.name }}" />
+    </div>
+    <div class="col-md-5">
+        <label for="id_filter_amount" class="form-label">Amount</label>
+        <input type="number" class="form-control" id="id_filter_amount" name="amount" value="{{ request.GET.amount }}" />
+    </div>
+    <div class="col-2 d-grid align-items-end mx-auto">
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+<hr />
 <table id="datatable" class="table table-hover table-bordered">
     <thead>
         <tr>
@@ -32,13 +46,13 @@
         $('#datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "/sortnpage/pagination-demos-data/",
+            ajax: "/sortnpage/pagination-demos-data/" + window.location.search,
             columns: [
                 { data: 'id', orderable: false },
                 { data: 'name' },
                 { data: 'amount' },
             ],
-            order: [[ 1, "asc" ]]
+            order: [[1, "asc"]]
         });
     });
 </script>

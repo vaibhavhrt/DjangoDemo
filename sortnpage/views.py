@@ -10,6 +10,7 @@ from django.db.models import Q
 
 from .models import PaginationDemo
 from .serializers import PaginationDemoSerializer
+from .filters import PaginationDemoFilter
 
 
 class PaginationDemoList(LoginRequiredMixin, ListView):
@@ -82,9 +83,11 @@ class PaginationDemoListData(View):
             ordering = "-" + ordering
 
         allObjects = PaginationDemo.objects.all().order_by(ordering)
+        filtered_objects = PaginationDemoFilter(request.GET, queryset=allObjects).qs
 
         # Add paginator
-        paginator = Paginator(allObjects, length)
+        # paginator = Paginator(allObjects, length)
+        paginator = Paginator(filtered_objects, length)
         page = (start // length) + 1
         pageObjects_list = paginator.get_page(page)
 
