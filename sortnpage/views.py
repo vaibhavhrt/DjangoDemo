@@ -93,7 +93,8 @@ class PaginationDemoListData(View):
 
         return JsonResponse(
             {
-                "recordsTotal": paginator.count,
+                # "recordsTotal": paginator.count,
+                "recordsTotal": allObjects.count(),
                 "recordsFiltered": paginator.count,
                 "data": PaginationDemoSerializer(pageObjects_list, many=True).data,
             }
