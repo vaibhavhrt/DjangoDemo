@@ -58,7 +58,7 @@
             ],
             order: [[1, "asc"]],
             createdRow: function (row, data, dataIndex) {
-                console.log(row, data, dataIndex);
+                // console.log(row, data, dataIndex);
                 if (data.amount === 0) $(row).children('.name').addClass('text-danger')
                 if (data.amount > 0) $(row).children('.amount').addClass('text-success')
             },
