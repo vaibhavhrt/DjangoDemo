@@ -1,16 +1,13 @@
-from functools import reduce
-from operator import and_
-
-from django.views.generic import ListView, DetailView, View
+from django.views.generic import ListView, DetailView, View, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.http.response import JsonResponse
-from django.db.models import Q
 
-from .models import PaginationDemo
+from .models import PaginationDemo, Incident
 from .serializers import PaginationDemoSerializer
 from .filters import PaginationDemoFilter
+from .forms import IncidentForm
 
 
 class PaginationDemoList(LoginRequiredMixin, ListView):
@@ -63,7 +60,7 @@ class PaginationDemoListData(View):
         except ValueError:
             length = 10
 
-        columns = ["id", "name", "amount"]
+        columns = ["id", "name", "amount", "createdAt"]
         ordering = "name"
 
         # Order Column
@@ -99,3 +96,9 @@ class PaginationDemoListData(View):
                 "data": PaginationDemoSerializer(pageObjects_list, many=True).data,
             }
         )
+
+
+class IncidentCreateView(CreateView):
+    model = Incident
+    form_class = IncidentForm
+    success_url = '/incidents/'

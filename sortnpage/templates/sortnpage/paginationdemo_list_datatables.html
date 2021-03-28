@@ -13,7 +13,8 @@
     </div>
     <div class="col-md-5">
         <label for="id_filter_amount" class="form-label">Amount</label>
-        <input type="number" class="form-control" id="id_filter_amount" name="amount" value="{{ request.GET.amount }}" />
+        <input type="number" class="form-control" id="id_filter_amount" name="amount"
+            value="{{ request.GET.amount }}" />
     </div>
     <div class="col-2 d-grid align-items-end mx-auto">
         <button type="submit" class="btn btn-primary">Filter</button>
@@ -26,6 +27,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Amount</th>
+            <th>Created At</th>
         </tr>
     </thead>
     <tbody>
@@ -33,6 +35,7 @@
             <td>id</td>
             <td>name</td>
             <td>amount</td>
+            <td>craetedAt</td>
         </tr>
     </tbody>
 </table>
@@ -49,10 +52,16 @@
             ajax: "/sortnpage/pagination-demos-data/" + window.location.search,
             columns: [
                 { data: 'id', orderable: false },
-                { data: 'name' },
-                { data: 'amount' },
+                { data: 'name', className: 'name' },
+                { data: 'amount', className: 'amount' },
+                { data: 'createdAt', render: (val) => new Date(val).toLocaleDateString('en-AU') },
             ],
-            order: [[1, "asc"]]
+            order: [[1, "asc"]],
+            createdRow: function (row, data, dataIndex) {
+                console.log(row, data, dataIndex);
+                if (data.amount === 0) $(row).children('.name').addClass('text-danger')
+                if (data.amount > 0) $(row).children('.amount').addClass('text-success')
+            },
         });
     });
 </script>

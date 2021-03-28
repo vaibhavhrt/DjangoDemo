@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'datetimewidget',
     'django_filters',
+    'tempus_dominus',
     'user.apps.UserConfig',
     'nestedrelations.apps.NestedrelationsConfig',
     'sortnpage.apps.SortnpageConfig',
@@ -140,3 +141,5 @@ REST_FRAMEWORK = {
 }
 
 LOGIN_URL = '/api-auth/login/'
+
+# TEMPUS_DOMINUS_LOCALIZE = True

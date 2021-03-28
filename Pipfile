@@ -7,6 +7,7 @@ name = "pypi"
 djangorestframework = "*"
 django-datetime-widget2 = "*"
 django-filter = "*"
+django-tempus-dominus = "*"
 
 [dev-packages]
 rope = "*"
