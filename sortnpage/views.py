@@ -43,7 +43,8 @@ class PaginationDemoDetail(LoginRequiredMixin, DetailView):
 
 
 class PaginationDemoListDatatables(View):
-    def get(self, request):
+
+    def get_context_data():
         today = datetime.today()
         last_7_day = today - timedelta(days=7)
         last_8_day = last_7_day - timedelta(days=1)
@@ -52,6 +53,10 @@ class PaginationDemoListDatatables(View):
             "last_7_day": last_7_day.strftime("%Y-%m-%d"),
             "last_8_day": last_8_day.strftime("%Y-%m-%d"),
         }
+        return context
+
+    def get(self, request):
+        context = self.get_context_data()
         return render(
             request, "sortnpage/paginationdemo_list_datatables.html", context=context
         )

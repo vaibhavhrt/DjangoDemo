@@ -15,4 +15,4 @@ class CountrySelect(models.Model):
     name = models.CharField(max_length=127)
 
     def __str__(self) -> str:
-        return self.name + self.location
+        return self.name + self.location.city
