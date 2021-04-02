@@ -20,6 +20,12 @@
         <button type="submit" class="btn btn-primary">Filter</button>
     </div>
 </form>
+<div class="d-flex justify-content-evenly">
+    <a href="{% url 'PaginationDemoListDatatables' %}?createdAt_lte={{ today }}&createdAt_gte={{ last_7_day }}">
+        Created in last 7 days
+    </a>
+    <a href="{% url 'PaginationDemoListDatatables' %}?createdAt_lte={{ last_8_day }}">Created earlier</a>
+</div>
 <hr />
 <table id="datatable" class="table table-hover table-bordered">
     <thead>

@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from django.views.generic import ListView, DetailView, View, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
@@ -43,7 +44,17 @@ class PaginationDemoDetail(LoginRequiredMixin, DetailView):
 
 class PaginationDemoListDatatables(View):
     def get(self, request):
-        return render(request, "sortnpage/paginationdemo_list_datatables.html")
+        today = datetime.today()
+        last_7_day = today - timedelta(days=7)
+        last_8_day = last_7_day - timedelta(days=1)
+        context = {
+            "today": today.strftime("%Y-%m-%d"),
+            "last_7_day": last_7_day.strftime("%Y-%m-%d"),
+            "last_8_day": last_8_day.strftime("%Y-%m-%d"),
+        }
+        return render(
+            request, "sortnpage/paginationdemo_list_datatables.html", context=context
+        )
 
 
 class PaginationDemoListData(View):
@@ -101,4 +112,4 @@ class PaginationDemoListData(View):
 class IncidentCreateView(CreateView):
     model = Incident
     form_class = IncidentForm
-    success_url = '/incidents/'
+    success_url = "/incidents/"
