@@ -7,14 +7,22 @@
 {% block header_text %}PaginationDemos{% endblock %}
 {% block content %}
 <form class="row my-4">
-    <div class="col-md-5">
+    <div class="col-md-3">
         <label for="id_filter_name" class="form-label">Name</label>
         <input class="form-control" id="id_filter_name" name="name" value="{{ request.GET.name }}" />
     </div>
-    <div class="col-md-5">
+    <div class="col-md-3">
         <label for="id_filter_amount" class="form-label">Amount</label>
         <input type="number" class="form-control" id="id_filter_amount" name="amount"
             value="{{ request.GET.amount }}" />
+    </div>
+    <div class="col-md-3">
+        <label for="id_filter_amount" class="form-label">Date Range</label>
+        <input type="text" class="form-control" id="id_daterange" value="" />
+        <input hidden type="text" class="form-control" id="id_createdAt_gte" name="createdAt_gte"
+            value="{{ request.GET.createdAt_gte }}" />
+        <input hidden type="text" class="form-control" id="id_createdAt_lte" name="createdAt_lte"
+            value="{{ request.GET.createdAt_lte }}" />
     </div>
     <div class="col-2 d-grid align-items-end mx-auto">
         <button type="submit" class="btn btn-primary">Filter</button>
@@ -49,6 +57,10 @@
 
 {% block scripts %}
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script>
     // Initialize datatable
     $(document).ready(function () {
@@ -69,6 +81,30 @@
                 if (data.amount > 0) $(row).children('.amount').addClass('text-success')
             },
         });
+    });
+    // Initialize date range picker
+    const start = "{{ request.GET.createdAt_gte }}";
+    const end = "{{ request.GET.createdAt_lte }}";
+    const startDate = start ? moment(start).format("DD/MM/YYYY") : undefined;
+    const endDate = end ? moment(end).format("DD/MM/YYYY") : undefined;
+    if (startDate && endDate) $('#id_daterange').val(startDate + " - " + endDate);
+    $('#id_daterange').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            format: "DD/MM/YYYY",
+            separator: " - ",
+            cancelLabel: 'Clear'
+        }
+    });
+    $('#id_daterange').on('apply.daterangepicker', function (ev, picker) {
+        $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+        $("#id_createdAt_gte").val(picker.startDate.format('YYYY-MM-DD'));
+        $("#id_createdAt_lte").val(picker.endDate.format('YYYY-MM-DD'));
+    });
+    $('#id_daterange').on('cancel.daterangepicker', function (ev, picker) {
+        $(this).val('');
+        $("#id_createdAt_gte").val('');
+        $("#id_createdAt_lte").val('');
     });
 </script>
 {% endblock %}

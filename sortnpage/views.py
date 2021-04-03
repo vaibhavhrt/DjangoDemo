@@ -44,7 +44,7 @@ class PaginationDemoDetail(LoginRequiredMixin, DetailView):
 
 class PaginationDemoListDatatables(View):
 
-    def get_context_data():
+    def get_context_data(self):
         today = datetime.today()
         last_7_day = today - timedelta(days=7)
         last_8_day = last_7_day - timedelta(days=1)
