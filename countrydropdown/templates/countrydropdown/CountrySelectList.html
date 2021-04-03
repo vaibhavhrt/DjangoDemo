@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}CountrySelect List{% endblock %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.css" />
+{% endblock head %}
+
+{% block header_text %}CountrySelects{% endblock %}
+{% block content %}
+<table id="datatable" class="table table-hover table-bordered">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td>name</td>
+      <td>location</td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
+<script>
+  // Initialize datatable
+  $(document).ready(function () {
+    $('#datatable').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: "/countrydropdown/country-select-datatables/" + window.location.search,
+      columns: [
+        { data: 'id', orderable: false, render: val => `<a href="/countrydropdown/country-select/${val}">${val}</a>` },
+        { data: 'name' },
+        {
+          data: 'location', render: (val) => {
+            return `<a href="/countrydropdown/location/${val.id}">${val.city}</a>`;
+          }
+        },
+      ],
+      order: [[1, "asc"]],
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}CountrySelect Detail{% endblock %}
+
+{% block header_text %}{{object.city}}{% endblock %}
+{% block content %}
+<p>id: {{ object.id }}</p>
+<p>state: {{ object.state }}</p>
+<p>country: {{ object.country }}</p>
+{% endblock content %}
