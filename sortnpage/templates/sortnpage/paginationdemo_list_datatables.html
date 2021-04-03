@@ -24,8 +24,13 @@
         <input hidden type="text" class="form-control" id="id_createdAt_lte" name="createdAt_lte"
             value="{{ request.GET.createdAt_lte }}" />
     </div>
-    <div class="col-2 d-grid align-items-end mx-auto">
+    <div class="col-1 d-grid align-items-end mx-auto">
         <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+    <div class="col-1 d-grid align-items-end mx-auto">
+        <a href="/sortnpage/pagination-demos-datatables/">
+            <button type="button" class="btn btn-primary">Reset</button>
+        </a>
     </div>
 </form>
 <div class="d-flex justify-content-evenly">
