@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from .models import PaginationDemo, Incident
-from .serializers import PaginationDemoSerializer, IncidentSerializer
+from .models import PaginationDemo, Incident, DateRangeAndDuration
+from .serializers import PaginationDemoSerializer, IncidentSerializer, DateRangeAndDurationSerializer
 
 
 class PaginationDemoViewSet(viewsets.ModelViewSet):
@@ -12,3 +12,8 @@ class PaginationDemoViewSet(viewsets.ModelViewSet):
 class IncidentViewSet(viewsets.ModelViewSet):
     serializer_class = IncidentSerializer
     queryset = Incident.objects.all()
+
+
+class DateRangeAndDurationViewSet(viewsets.ModelViewSet):
+    serializer_class = DateRangeAndDurationSerializer
+    queryset = DateRangeAndDuration.objects.all()

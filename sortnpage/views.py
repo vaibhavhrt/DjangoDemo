@@ -5,10 +5,10 @@ from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.http.response import JsonResponse
 
-from .models import PaginationDemo, Incident
+from .models import PaginationDemo, Incident, DateRangeAndDuration
 from .serializers import PaginationDemoSerializer
 from .filters import PaginationDemoFilter
-from .forms import IncidentForm
+from .forms import IncidentForm, DateRangeAndDurationForm
 
 
 class PaginationDemoList(LoginRequiredMixin, ListView):
@@ -118,3 +118,9 @@ class IncidentCreateView(CreateView):
     model = Incident
     form_class = IncidentForm
     success_url = "/incidents/"
+
+
+class DateRangeAndDurationCreateView(CreateView):
+    model = DateRangeAndDuration
+    form_class = DateRangeAndDurationForm
+    success_url = "/date-range-and-durations/"

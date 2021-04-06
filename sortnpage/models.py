@@ -20,3 +20,9 @@ class Incident(models.Model):
         if self.pk is None:  # New object is being created
             self.iteration = int(self.number.split("-")[-1])
         super().save(*args, **kwargs)
+
+
+class DateRangeAndDuration(models.Model):
+    start_date = models.DateField(null=False)
+    end_date = models.DateField(null=False)
+    duration_days = models.PositiveIntegerField(null=False)

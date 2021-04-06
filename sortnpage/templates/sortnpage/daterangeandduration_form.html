@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Date Range and Duration Create{% endblock %}
+{% block head %}
+{# Include Bootstrap 4 #}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+{{ form.media }}
+{% endblock head %}
+{% block header_text %}Date Range and Duration Create{% endblock %}
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-primary">Save</button>
+</form>
+{% endblock content %}
+{% block scripts %}
+<script>
+  $(document).ready(function () {
+    $("#id_start_date").on('change.datetimepicker', e => {
+      const start_date = e.date;
+      const end_date = $('#id_end_date').datetimepicker('viewDate');
+      const duration = moment.duration(end_date.diff(start_date));
+      $("#id_duration_days").val(duration.asDays());
+    });
+    $("#id_end_date").on('change.datetimepicker', e => {
+      const start_date = $('#id_start_date').datetimepicker('viewDate');
+      const end_date = e.date;
+      const duration = moment.duration(end_date.diff(start_date));
+      $("#id_duration_days").val(duration.asDays());
+    });
+  });
+</script>
+{% endblock scripts %}
