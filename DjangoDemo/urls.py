@@ -23,6 +23,7 @@ from nestedrelations.urls import router as nestedrelations_router
 from sortnpage.urls import router as sortnpage_router
 from grouppermissions.urls import router as grouppermissions_router
 from countrydropdown.urls import router as countrydropdown_router
+from bulkupdate.urls import router as bulkupdate_router
 
 router = routers.DefaultRouter()
 router.registry.extend(user_router.registry)
@@ -30,6 +31,7 @@ router.registry.extend(nestedrelations_router.registry)
 router.registry.extend(sortnpage_router.registry)
 router.registry.extend(grouppermissions_router.registry)
 router.registry.extend(countrydropdown_router.registry)
+router.registry.extend(bulkupdate_router.registry)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,4 +41,5 @@ urlpatterns = [
     path('sortnpage/',include('sortnpage.urls')),
     path('grouppermissions/',include('grouppermissions.urls')),
     path('countrydropdown/',include('countrydropdown.urls')),
+    path('bulkupdate/',include('bulkupdate.urls')),
 ]

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'sortnpage.apps.SortnpageConfig',
     'grouppermissions.apps.GrouppermissionsConfig',
     'countrydropdown.apps.CountrydropdownConfig',
+    'bulkupdate.apps.BulkupdateConfig',
 ]
 
 MIDDLEWARE = [

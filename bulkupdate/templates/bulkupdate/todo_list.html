@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Todo List{% endblock %}
+
+{% block header_text %}Todos{% endblock %}
+{% block content %}
+<form id="todo-form" method="POST" action="{% url 'TodoStatusUpdate' %}">
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Select</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for obj in object_list %}
+      <tr>
+        <td>{{ obj.id }}</td>
+        <td>{{ obj.name }}</td>
+        <td>{{ obj.get_status_display }}</td>
+        <td>
+          <input
+            type="checkbox"
+            name="status"
+            value="{{ obj.id }}"
+            {% if obj.status is not 0 %}disabled checked{% endif %}
+          />
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary">Mark as Complete</button>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $(document).ready(function () {
+    // $('#todo-form').on('submit', function (e) {
+    //   console.log(e);
+    //   e.preventDefault();
+    //   return false;
+    // });
+  });
+</script>
+{% endblock scripts %}
