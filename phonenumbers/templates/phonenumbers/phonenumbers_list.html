@@ -4,6 +4,11 @@
 {% block header_text %}Phone Numbers{% endblock %}
 {% block content %}
 <div>
+    <div>
+        <a href="{% url 'PhoneNumbersCreate' %}">
+            <button class="btn btn-primary">Create</button>
+        </a>
+    </div>
     {% for obj in object_list %}
     <div style="border: 1px solid black" class="my-1 p-1" id="obj-{{ obj.id }}">
         <p>id: {{ obj.id }}</p>
@@ -22,11 +27,3 @@
     {% endfor %}
 </div>
 {% endblock %}
-
-{% block scripts %}
-<script>
-    $(document).ready(function () {
-
-    });
-</script>
-{% endblock scripts %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Phone Numbers List{% endblock %}
+
+{% block header_text %}Phone Numbers{% endblock %}
+{% block content %}
+<div>
+    <form method="POST" id="phone_numbers-dummy-from">
+        {% csrf_token %}
+        <!-- Name -->
+        <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input class="form-control" required id="name" name="name" />
+        </div>
+        <!-- Phone Numbers -->
+        <label class="form-label">Phone Numbers:</label>
+        <div class="mb-3 container phone_numbers">
+            <!-- Filled with JS -->
+        </div>
+        <div>
+            <button type="button" id="add-more" class="btn btn-primary">Add More</button>
+        </div>
+        <!-- Submit -->
+        <div class="justify-content-center d-flex">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+    <form method="POST" id="phone_numbers-from">
+        {% csrf_token %}
+        <input hidden name="name" />
+        <input hidden name="phone_numbers" />
+    </form>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    const phoneInputElement = `
+        <div class="row phone_number my-1">
+            <div class="col">
+                <input class="form-control phone_numbers-type" placeholder="type" />
+            </div>
+            <div class="col">
+                <input class="form-control phone_numbers-number" placeholder="number" />
+            </div>
+        </div>`;
+    $(document).ready(function () {
+        $("#phone_numbers-dummy-from").submit(function(e) {
+            e.preventDefault();
+            const name = $("input[name=name]").val();
+            const phoneNumbers = [];
+            $(".phone_numbers .phone_number").each(function () {
+                const type = $(this).find(".phone_numbers-type").val();
+                const number = $(this).find(".phone_numbers-number").val();
+                if (type && number) phoneNumbers.push({ type, number });
+            });
+            // console.log({ name, phoneNumbers });
+
+            const formToSubmit = $("#phone_numbers-from");
+            const nameInput = formToSubmit.find("input[name=name]");
+            const phoneNumbersInput = formToSubmit.find("input[name=phone_numbers]");
+            nameInput.val(name);
+            phoneNumbersInput.val(JSON.stringify(phoneNumbers));
+            formToSubmit.submit();
+        });
+
+        $(".phone_numbers").append(phoneInputElement);
+        $("#add-more").click(e => {
+            $(".phone_numbers").append(phoneInputElement);
+        });
+    });
+</script>
+{% endblock scripts %}
