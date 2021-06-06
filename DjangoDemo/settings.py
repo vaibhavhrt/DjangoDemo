@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'grouppermissions.apps.GrouppermissionsConfig',
     'countrydropdown.apps.CountrydropdownConfig',
     'bulkupdate.apps.BulkupdateConfig',
+    'phonenumbers.apps.PhonenumbersConfig',
 ]
 
 MIDDLEWARE = [
