@@ -23,6 +23,11 @@
                 });
             });
         </script>
+        <div>
+            <a href="{% url 'PhoneNumbersUpdate' obj.id %}">
+                <button class="btn btn-primary btn-sm">Edit</button>
+            </a>
+        </div>
     </div>
     {% endfor %}
 </div>

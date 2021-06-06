@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Phone Numbers List{% endblock %}
+{% block title %}Phone Numbers Create/Update{% endblock %}
 
 {% block header_text %}Phone Numbers{% endblock %}
 {% block content %}
@@ -9,7 +9,8 @@
         <!-- Name -->
         <div class="mb-3">
             <label for="name" class="form-label">Name:</label>
-            <input class="form-control" required id="name" name="name" />
+            <input class="form-control" required id="name" name="name"
+                value="{{ form.name.value|default_if_none:'' }}" />
         </div>
         <!-- Phone Numbers -->
         <label class="form-label">Phone Numbers:</label>
@@ -34,17 +35,18 @@
 
 {% block scripts %}
 <script>
-    const phoneInputElement = `
+    const phoneInputElement = (type, number) => `
         <div class="row phone_number my-1">
             <div class="col">
-                <input class="form-control phone_numbers-type" placeholder="type" />
+                <input class="form-control phone_numbers-type" placeholder="type" value="${type || ''}" />
             </div>
             <div class="col">
-                <input class="form-control phone_numbers-number" placeholder="number" />
+                <input class="form-control phone_numbers-number" placeholder="number" value="${number || ''}" />
             </div>
         </div>`;
     $(document).ready(function () {
-        $("#phone_numbers-dummy-from").submit(function(e) {
+        // handle submit
+        $("#phone_numbers-dummy-from").submit(function (e) {
             e.preventDefault();
             const name = $("input[name=name]").val();
             const phoneNumbers = [];
@@ -63,9 +65,16 @@
             formToSubmit.submit();
         });
 
-        $(".phone_numbers").append(phoneInputElement);
+        // create default inputs for phone numbers
+        const initialNumbers = JSON.parse('{{ form.phone_numbers.value|default_if_none:"[]"|safe }}');
+        initialNumbers.forEach((num) => {
+            $(".phone_numbers").append(phoneInputElement(num.type, num.number));
+        })
+        $(".phone_numbers").append(phoneInputElement());
+
+        // Add more button click
         $("#add-more").click(e => {
-            $(".phone_numbers").append(phoneInputElement);
+            $(".phone_numbers").append(phoneInputElement());
         });
     });
 </script>
